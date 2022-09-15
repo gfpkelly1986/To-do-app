@@ -17,7 +17,8 @@ app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DB_URL")
 
 # Create an instance of the SQLAlchemy class,
 # Store in db variable, set to instance of our Flask app
-# You are binding the instance of SQLAlchemy to the application called taskmanager
+# You are binding the instance of SQLAlchemy to the application
+#  called taskmanager
 db = SQLAlchemy(app)
 
 from taskmanager import routes  # noqa
