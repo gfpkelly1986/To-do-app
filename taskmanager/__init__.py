@@ -1,6 +1,7 @@
 # importing the os allows you to interact with the
 # operating system on the computer.
 import os # noqa
+import re
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 # env.py not visible in github, check filepath exits locally:
@@ -16,7 +17,10 @@ app.config["SECRET_KEY"] = os.environ.get("SECRET_KEY")
 if os.environ.get("DEVELOPMENT") == "True":
     app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DB_URL")
 else:
-    app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DATABASE_URL")
+    uri = os.environ.get("DATABASE_URL")
+    if uri.startswith("postgres://"):
+        uri = uri.replace("postgres://", "postgresql://", 1)
+    app.config["SQLALCHEMY_DATABASE_URI"] = uri
 
 # Create an instance of the SQLAlchemy class,
 # Store in db variable, set to instance of our Flask app
