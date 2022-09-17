@@ -48,6 +48,7 @@ def delete_category(category_id):
     return redirect(url_for("categories"))
 
 
+# Add a task to the table
 @app.route("/add_task", methods=["GET", "POST"])
 def add_task():
     categories = list(Category.query.order_by(Category.category_name).all())
@@ -64,7 +65,7 @@ def add_task():
         return redirect(url_for("home"))
     return render_template("add_task.html", categories=categories)
 
-
+# edit a task that is on the table (Update)
 @app.route("/edit_task/<int:task_id>", methods=["GET", "POST"])
 def edit_task(task_id):
     task = Task.query.get_or_404(task_id)
@@ -77,3 +78,11 @@ def edit_task(task_id):
         task.category_id = request.form.get("category_id")
         db.session.commit()
     return render_template("edit_task.html", task=task, categories=categories)
+
+
+@app.route("/delete_task/<int:task_id>")
+def delete_task(task_id):
+    task = Task.query.get_or_404(task_id)
+    db.session.delete(task)
+    db.session.commit()
+    return redirect(url_for("home"))
