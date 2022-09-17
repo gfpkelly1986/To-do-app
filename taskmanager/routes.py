@@ -3,17 +3,6 @@ from taskmanager import app, db
 from taskmanager.models import Category, Task
 
 
-@app.route("/")
-def home():
-    return render_template("tasks.html")
-
-# The R in CRUD
-@app.route("/categories")
-def categories():
-    categories = list(Category.query.order_by(Category.category_name).all())
-    return render_template("categories.html", categories=categories)
-
-
 # This is the C in CRUD
 @app.route("/add_category", methods=["GET", "POST"])
 def add_category():
@@ -23,6 +12,17 @@ def add_category():
         db.session.commit()
         return redirect(url_for("categories"))
     return render_template("add_category.html")
+
+
+@app.route("/")
+def home():
+    return render_template("tasks.html")
+
+# The R in CRUD
+@app.route("/categories")
+def categories():
+    categories = list(Category.query.order_by(Category.category_name).all())
+    return render_template("categories.html", categories=categories)
 
 
 # This is the U in CRUD
@@ -36,6 +36,7 @@ def edit_category(category_id):
     return render_template("edit_category.html", category=category)
 
 
+# This is the D in CRUD
 @app.route("/delete_category/<int:category_id>")
 def delete_category(category_id):
     category = Category.query.get_or_404(category_id)
