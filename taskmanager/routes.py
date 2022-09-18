@@ -1,5 +1,6 @@
 from flask import render_template, request, redirect, url_for
 from taskmanager import app, db
+# This import is needed here before the database is built in the postgres CLI
 from taskmanager.models import Category, Task
 
 
@@ -18,10 +19,9 @@ def add_category():
 def home():
     tasks = list(Task.query.order_by(Task.id).all())
     return render_template("tasks.html", tasks=tasks)
+    
 
 # The R in CRUD
-
-
 @app.route("/categories")
 def categories():
     categories = list(Category.query.order_by(Category.category_name).all())

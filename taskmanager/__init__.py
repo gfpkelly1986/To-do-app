@@ -1,7 +1,7 @@
 # importing the os allows you to interact with the
 # operating system on the computer.
 import os # noqa
-import re
+import re # noqa
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 # env.py not visible in github, check filepath exits locally:
@@ -12,6 +12,8 @@ if os.path.exists("env.py"):
 # Create an instance of the Flask object
 app = Flask(__name__)
 # Specify two app configuration variables
+# The secret key securely signs session cookies:
+# https://developer.mozilla.org/en-US/docs/Web/HTTP/Cookies
 app.config["SECRET_KEY"] = os.environ.get("SECRET_KEY")
 # set the database location
 if os.environ.get("DEVELOPMENT") == "True":
